@@ -1,11 +1,15 @@
 import requests
 import os
+import random
 from flask import Flask, render_template
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv()) 
 
 client_id = os.getenv('id')
 client_secret = os.getenv('secret')
+artist_id = ['3TVXtAsR1Inumwj472S9r4', '7dGJo4pcD2V6oG8kP0tJRR', '1Xyo4u8uXC1ZmMpatF05PJ']
+random_artist = random.randint(0,2)
+random_track = random.randint(0, 9)
 app = Flask(__name__)
 
 
@@ -36,28 +40,28 @@ params={'limit': 10,
         }
 
 
-BASE_URL = 'https://api.spotify.com/v1/browse/new-releases'
+BASE_URL = 'https://api.spotify.com/v1/artists/' + artist_id[random_artist] + '/top-tracks'
 
 r = requests.get(BASE_URL,
                         headers=headers,
                         params=params)
-                        
+
 d = r.json()
-track = []
-for album in d['albums']['items']:
+#print(d)
+
+track = d['tracks'][random_track]['name']
+
+"""
+for song in d['tracks']:
     track.append(album['name'])
-    
-"""
-for i in range(len(d['albums']['items'])):
-    track[i] = d[i]['albums']['items']['name']
-"""
+""" 
 
 @app.route('/')
 def hello_world():
     print('updated')
     return render_template(
         "index.html",
-        len = len(track), track = track,
+        len = len(track), track=track,
     )
     
 app.run(
