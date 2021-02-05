@@ -2,24 +2,21 @@
 <html>
     
 <head>
-    <style>
-        body{
-            background-color: #2196f3;
-            font-family: Arial, Helvetica, sans-serif;
-            }
-       
-            li {
-                font-size: 36;
-            }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}" />
 </head>
     
 <body>
-    <h1>Hello world</h1>
-    <h2>Hello world</h2>
-    <ol>
-        <li> {{track}} </li>
-    </ol>
+    <h1>{{track['name']}}</h1>
+    
+    <h2>by {{track['artists'][0]['name']}}</h2>
+    
+    <img src= "{{track['album']['images'][0]['url']}}" alt="{{track['name']}}" width="300" height="300">
+    </br>
+    <audio controls>
+      <source src="{{audio}}" type="audio/ogg">
+      <source src="{{audio}}" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
 </body>
 
 </html>
