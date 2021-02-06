@@ -2,7 +2,7 @@
 <html>
     
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}"/>
 </head>
     
 <body>
@@ -10,12 +10,15 @@
     
     <h2>by {{track['artists'][0]['name']}}</h2>
     
-    <img src= "{{track['album']['images'][0]['url']}}" alt="{{track['name']}}" width="300" height="300">
+    <p id="rcorners">
+        <img src= "{{track['album']['images'][0]['url']}}" alt="{{track['name']}}" id="rcorners" width="300" height="300">
+    </p>
     </br>
-    <audio controls>
+    
+    <audio controls id="rcorners">
       <source src="{{audio}}" type="audio/ogg">
       <source src="{{audio}}" type="audio/mpeg">
-      Your browser does not support the audio element.
+      No preview available.
     </audio>
 </body>
 
