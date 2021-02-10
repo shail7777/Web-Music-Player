@@ -20,6 +20,12 @@
       <source src="{{audio}}" type="audio/mpeg">
       No preview available.
     </audio>
+    </br>
+    {% if lyrics_url == 'none' %}
+        <p>Lyrics Not available</p>
+    {% else %}
+        <a href="{{lyrics_url}}">Lyrics</a>
+    {% endif %}
 </body>
 
 </html>
