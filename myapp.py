@@ -8,6 +8,7 @@ load_dotenv(find_dotenv())
 client_id = os.getenv('id')
 client_secret = os.getenv('secret')
 access_token_genius = os.getenv('access_token_genius')
+matcher_api_token = os.getenv('matcher_api_token')
 
 artist_id = [
             '72beYOeW2sb2yfcS4JsRvb',
@@ -36,7 +37,30 @@ def getlyrics(song_name, artist_name):
                 return response['response']['hits'][i]['result']['url']
         else:
             continue
+        
     return "none"
+
+def matcher_api(song_name, artist_name):
+    URL = 'https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=json&callback=callback'
+    
+    params={'q_track':song_name,
+            'q_artist':artist_name,
+            'apikey':matcher_api_token
+            }
+            
+    r = requests.get(URL,
+                    params=params
+                    )
+    #print("matcher_api: " + str(r.json()))
+    r = r.json()
+    status = r['message']['header']['status_code']
+    
+    if status == 200:
+        #print(r['message']['body']['lyrics']['lyrics_body'])
+        return r['message']['body']['lyrics']['lyrics_body'].split("\n")
+    else:
+        return 'none'
+
 
 def spotify_api(client_id, client_secret):
     AUTH_URL = 'https://accounts.spotify.com/api/token'
@@ -78,18 +102,20 @@ def spotify_api(client_id, client_secret):
     audio = audio['tracks'][0]['preview_url']
     return track, audio
 
-
 @app.route('/')
 def hello_world():
     track, audio = spotify_api(client_id,client_secret)
     lyrics_url = getlyrics(track['name'], track['artists'][0]['name'])
+    lyrics_text = matcher_api(track['name'], track['artists'][0]['name'])
     
     print('updated')
     return render_template(
         "index.html",
         len = len(track), track=track,
         audio=audio,
-        lyrics_url=lyrics_url
+        lyrics_url=lyrics_url,
+        lyrics_text=lyrics_text,
+        len_lyrics=len(lyrics_text)
     )
     
 app.run(

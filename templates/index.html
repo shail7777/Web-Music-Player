@@ -21,11 +21,43 @@
       No preview available.
     </audio>
     </br>
+    </br>
     {% if lyrics_url == 'none' %}
-        <p>Lyrics Not available</p>
+        <p>Lyrics URL not available</p>
     {% else %}
-        <a href="{{lyrics_url}}">Lyrics</a>
+        <a href="{{lyrics_url}}">Lyrics URL</a>
     {% endif %}
+    
+    <div id="overlay" class="overlay">
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <!-- Overlay content -->
+        {% if lyrics_text == 'none' %}
+            <p></p>
+        {% else %}
+            <div class="overlay-content">
+            {%for i in range(len_lyrics-2)%}
+                <a id="display" href="#">{{lyrics_text[i]}}</p>
+            {%endfor%}
+            </div>
+        {% endif %}
+    </div>
+    </br>
+    {% if lyrics_text != 'none' %}
+        <button onclick="openNav()">Lyrics Text</button>
+    {% endif %}
+    
+<script>
+/* Open when someone clicks on the span element */
+function openNav() {
+  document.getElementById("overlay").style.width = "100%";
+}
+
+/* Close when someone clicks on the "x" symbol inside the overlay */
+function closeNav() {
+  document.getElementById("overlay").style.width = "0%";
+}
+</script>
 </body>
 
 </html>
