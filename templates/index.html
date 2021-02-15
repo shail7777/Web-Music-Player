@@ -11,11 +11,11 @@
     <h2>by {{track['artists'][0]['name']}}</h2>
     
     <p id="rcorners">
-        <img src= "{{track['album']['images'][0]['url']}}" alt="{{track['name']}}" id="rcorners" width="300" height="300">
+        <img src= "{{track['album']['images'][0]['url']}}" alt="{{track['name']}}" class="rounded-corners" width="300" height="300">
     </p>
     </br>
     
-    <audio controls id="rcorners">
+    <audio controls class="rounded">
       <source src="{{audio}}" type="audio/ogg">
       <source src="{{audio}}" type="audio/mpeg">
       No preview available.
@@ -25,26 +25,22 @@
     {% if lyrics_url == 'none' %}
         <p>Lyrics URL not available</p>
     {% else %}
-        <a href="{{lyrics_url}}">Lyrics URL</a>
+        <a href="{{lyrics_url}}" class="button button2">Lyrics URL</a>
     {% endif %}
     
     <div id="overlay" class="overlay">
     <!-- Button to close the overlay navigation -->
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <!-- Overlay content -->
-        {% if lyrics_text == 'none' %}
-            <p></p>
-        {% else %}
-            <div class="overlay-content">
-            {%for i in range(len_lyrics-2)%}
-                <a id="display" href="#">{{lyrics_text[i]}}</p>
-            {%endfor%}
-            </div>
-        {% endif %}
+        <div class="overlay-content">
+        {%for i in range(len_lyrics-2)%}
+            <a id="display" href="#">{{lyrics_text[i]}}</p>
+        {%endfor%}
+        </div>
     </div>
-    </br>
+    
     {% if lyrics_text != 'none' %}
-        <button onclick="openNav()">Lyrics Text</button>
+        <button onclick="openNav()" class="button button2">Lyrics Text</button>
     {% endif %}
     
 <script>

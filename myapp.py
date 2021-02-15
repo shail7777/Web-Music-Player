@@ -10,10 +10,10 @@ client_secret = os.getenv('secret')
 access_token_genius = os.getenv('access_token_genius')
 matcher_api_token = os.getenv('matcher_api_token')
 
-artist_id = [
-            '72beYOeW2sb2yfcS4JsRvb',
+artist_id = ['72beYOeW2sb2yfcS4JsRvb',
             '69GGBxA162lTqCwzJG5jLp', 
             '0KNIXlZbeaDBiaKIjNN8Gr']
+
 app = Flask(__name__)
 
 def getlyrics(song_name, artist_name):
@@ -51,12 +51,11 @@ def matcher_api(song_name, artist_name):
     r = requests.get(URL,
                     params=params
                     )
-    #print("matcher_api: " + str(r.json()))
+                
     r = r.json()
     status = r['message']['header']['status_code']
     
     if status == 200:
-        #print(r['message']['body']['lyrics']['lyrics_body'])
         return r['message']['body']['lyrics']['lyrics_body'].split("\n")
     else:
         return 'none'
@@ -69,7 +68,7 @@ def spotify_api(client_id, client_secret):
     auth_response = requests.post(AUTH_URL, {
                                 'grant_type': 'client_credentials',
                                 'client_id': client_id,
-                                'client_secret': client_secret,})
+                                'client_secret': client_secret})
     
     auth_response_data = auth_response.json()
     access_token = auth_response_data['access_token']
